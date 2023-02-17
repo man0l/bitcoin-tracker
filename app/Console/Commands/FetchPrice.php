@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class FetchPrice extends Command
 {
@@ -11,20 +12,22 @@ class FetchPrice extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'fetch:price';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Fetching price from bitfinex';
 
     /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        //
+        $pair = Http::get(env('FETCH_PRICE_BTC_USD_API_URL'));
+        $price = json_decode($pair->body(), true);
+        var_dump($price);
     }
 }
